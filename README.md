@@ -1,7 +1,7 @@
 ### Max Graves
 
 ## Relevant Skills/Tech
-`Python`, `React.js`, full stack development, TDD, customer-focused software development, data analysis
+`Python`, `React.js`, full stack development, TDD, customer-focused software development, data analysis, relational databases
 
 ## Experience
 
