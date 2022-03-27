@@ -7,7 +7,7 @@
 
 #### Senior Research Engineer -- Pratt & Whitney -- 2018-current
 - senior-most software engineer supporting a group of ~75 researchers
-- built a boilerplate stack (*`React.js`, `Flask`, `mysql` + `SQLAlchemy`, `gunicorn`, `nginx`*) that could be provisioned with `Ansible`, built out with all of the core features required for a web app to run on our enterprise network (*AuthN/AuthZ (LDAPs/JWT), Clientside Auth Flow, User Registration System, User Account Role Framework, User Admin Panel, SMTP integration, TLS certs for dev system, Systemd Services Configured, Reverse Proxy Configured, Backend and Frontend Scaffolding*)
+- reduced concept-to-deployment time by ~40 hours per project, while eliminating stack fragmentation, by building a boilerplate stack (*`React.js`, `Flask`, `mysql` + `SQLAlchemy`, `gunicorn`, `nginx`*) that could be provisioned with `Ansible`, built out with all of the core features required for a web app to run on our enterprise network (*AuthN/AuthZ (LDAPs/JWT), Clientside Auth Flow, User Registration System, User Account Role Framework, User Admin Panel, SMTP integration, TLS certs for dev system, Systemd Services Configured, Reverse Proxy Configured, Backend and Frontend Scaffolding*)
 - built six web applications using my boilerplate stack and trained another software engineer to build their own web apps using it.  All are critical to, or support, production processes.
 - built two `electron.js` apps that support production processes
 - used `Rust` with `pyo3` to alleviate performance bottlenecks in `python` libraries
