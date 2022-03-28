@@ -1,0 +1,16 @@
+# TeX file output
+*.aux
+*.log
+*.out
+
+# pycache dirs
+**__pycache__
+
+# tex templates used for creating raw strings
+tex_templates/*
+
+# output files
+out/*
+
+# yaml config - dont push personal info to GH
+*.yml
