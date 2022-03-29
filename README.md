@@ -104,6 +104,11 @@ experience:
       h_1: 'did a couple of things'
 ```
 
+
+## Release Notes / Change Log
+[Click here to see the release notes](./docs/CHANGELOG.md)
+
+
 ## Template source
 
 The templates are taken from [this site](https://www.overleaf.com/gallery/tagged/cv).  There's some modification from the original here and there as needed.
