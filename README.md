@@ -2,6 +2,8 @@
 
 This allows you to build a resume using `LaTeX`, from a `yaml` file.
 
+*... at this point, this is a minimum viable product and only supports one template with minimal options*
+
 ## Why?
 
 This can allow us to try out multiple different styles/layouts for a resume while inserting content that might be job-specific into each template.
