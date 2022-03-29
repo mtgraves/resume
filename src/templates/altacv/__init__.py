@@ -170,11 +170,14 @@ def resume(resume_info):
         % ----- CONTACT -----
 
         % ----- ABOUT ME -----
-        \cvsection{About Me}
+        \cvsection{Objective}
             \begin{quote}
-            '''+str(resume_info['applicant_info']['about'])+r'''
+            '''+str(resume_info['applicant_info']['objective'])+r'''
             \end{quote}
         % ----- ABOUT ME -----
+
+        \vspace{1.0em}
+
         % ----- STRENGTHS -----
         \cvsection{Strengths}
         

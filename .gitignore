@@ -14,3 +14,9 @@ out/*
 
 # yaml config - dont push personal info to GH
 *.yml
+
+# test reports
+docs/testreports/*
+
+# local file used for building my own resume
+test.py

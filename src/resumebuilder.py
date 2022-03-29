@@ -1,7 +1,8 @@
 import yaml
 import os
-import templates.altacv as t_1
-import templates.maxgcv as t_2
+import src.templates.altacv as t_1
+import src.templates.maxgcv as t_2
+from src.md2tex import convert_md_str_to_tex
 
 class Resume:
     '''Class representation of your resume object
@@ -44,7 +45,7 @@ class Resume:
             md_val=self.resume_info_md,
             tex_val = self.resume_info_tex,
         )
-
+        
         if self.resume_template == 'altacv':
             resume_str = t_1.resume(self.resume_info_tex)
         elif self.resume_template == 'maxgcv':
@@ -63,47 +64,8 @@ class Resume:
                     tex_val=tex_val[md_i_key]
                 )
             elif type(tex_val[md_i_key]) == str:
-                tex_val[md_i_key] = self.convert_md_str_to_tex(md_val[md_i_key])
+                tex_val[md_i_key] = convert_md_str_to_tex(md_val[md_i_key])
 
-
-    def convert_md_str_to_tex(self, markdown_string):
-        '''converts individual markdown style strings to LaTeX formatting including:
-        - backticks to colorbox (for code highlighting)
-        - ampersand
-        - tilde to sim
-        '''
-        tex_string = r''
-        found_backtick_start = False
-        found_italics_start = False
-        for str_ch in markdown_string:
-            
-            # backticks
-            if str_ch == '`':
-                if not found_backtick_start:
-                    found_backtick_start = True
-                    tex_string += r'\colorbox{lightgray}{'
-                else:
-                    found_backtick_start = False
-                    tex_string += r'}'
-            # italics
-            if str_ch == '*':
-                if not found_italics_start:
-                    found_italics_start = True
-                    tex_string += r'\textit{'
-                else:
-                    found_italics_start = False
-                    tex_string += r'}'
-            # tilde (~)
-            elif str_ch == '~':
-                tex_string += r'$\sim$'
-            # ampersand (&)
-            elif str_ch == '&':
-                tex_string += r'\&'
-            else:
-                tex_string += str_ch
-
-        return tex_string
-    
 
     def write_tex(self):
         '''write user resume out to LaTeX (.tex) format
@@ -118,6 +80,7 @@ class Resume:
         os.system('pdflatex '+str(self.fpath_tex)+' -output-directory out')
 
 
+'''
 def main():
 
     fpath_base = 'MaxGraves_resume_test'
@@ -136,3 +99,4 @@ def main():
 
 if __name__=='__main__':
     main()
+'''

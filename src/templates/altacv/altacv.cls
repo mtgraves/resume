@@ -428,7 +428,8 @@
 \newcommand{\skill}[2]{%
     \textcolor{emphasis}{\textit{#1}} \\ \hfill
     \foreach \x in {1,...,5}{%
-      \space{\ifnumgreater{\x}{#2}{\color{gray}}{\color{accent}}\faCircle}}\par%
+      {\ifnumgreater{\x}{#2}{\color{gray}}{\color{accent}}\faCircle}}\par%
+      %\space{\ifnumgreater{\x}{#2}{\color{gray}}{\color{accent}}\faCircle}}\par%
 }
 
 
