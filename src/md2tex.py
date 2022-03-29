@@ -32,7 +32,9 @@ def convert_md_str_to_tex(markdown_string):
                 ])
 
         # group them and check for correct ordering etc
+        # ... this is where the multi-link logic should live
 
+        # ...but for now we just handle the first one encountered in the string (jank)
         sq_open_index = markdown_string.find('[')
         sq_close_index = markdown_string.find(']')
         par_open_index = markdown_string.find('(')
