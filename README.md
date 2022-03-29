@@ -104,6 +104,7 @@ experience:
       h_1: 'did a couple of things'
 ```
 
+3. you should now have a `.pdf` and a `.tex` file in the `out` directory.
 
 ## Release Notes / Change Log
 [Click here to see the release notes](./docs/CHANGELOG.md)
