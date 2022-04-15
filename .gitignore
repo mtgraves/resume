@@ -9,6 +9,9 @@
 # tex templates used for creating raw strings
 tex_templates/*
 
+# input files
+in/*
+
 # output files
 out/*
 

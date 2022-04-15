@@ -1,8 +1,10 @@
 import os
-def resume(resume_info):
+
+def cls_file_path():
     '''
+    build a filepath for the alta cls file so that tex can find it.  It expects
+    all filepaths to be in nix format (forward slashes).
     '''
-    
     # ensure that the class file is able to be found
     alta_cls_file_og = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
@@ -24,7 +26,62 @@ def resume(resume_info):
                 alta_cls_file += str(fpath_part)
     else:
         alta_cls_file = alta_cls_file_og
+    
+    return alta_cls_file
 
+
+def build_strengths(resume_info, show_skill_ratings):
+    '''returns tex for the skills section
+    '''
+    
+    resume_str = r''
+    if show_skill_ratings:
+        resume_str += r'''
+            \skillsection{Software Development}
+            \vspace{0.5em}
+            '''
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['software_development'].values()):
+            resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
+
+        resume_str += r'''
+            \vspace{1.0em}
+            \skillsection{Programming Languages}
+            \vspace{0.5em}
+            '''
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['programming'].values()):
+            resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
+        resume_str += r'''
+            \vspace{1.0em}
+            \skillsection{Other}
+            \vspace{0.5em}
+            '''
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['other'].values()):
+            resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
+    else:
+        resume_str += r'''
+        \cvsection{Strengths}
+            '''
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['programming'].values()):
+            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['software_development'].values()):
+            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
+        for exp_i_count, exp_i in enumerate(resume_info['strengths']['other'].values()):
+            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
+    
+    return resume_str
+
+
+def resume(
+    resume_info,
+    background_color='E2E2E2',
+    primary_font_color='666666',
+    show_skill_ratings=True,
+):
+    '''
+    build out the tex file from a resume info object for altacv format
+    '''
+    
+    alta_cls_file = cls_file_path()
     
     resume_str = r'''
 %%%%%%%%%%%%%%%%%
@@ -56,7 +113,6 @@ def resume(resume_info):
 %% Fork: CV dark mode toggle enabler to use a inverted color palette.
 %% Use the "darkmode" option if you want a color palette used to 
 % \documentclass[10pt,a4paper,darkmode]{altacv}
-
 \documentclass[10pt,letterpaper,ragged2e,withhyper]{'''+str(alta_cls_file)+r'''}
 
 %% AltaCV uses the fontawesome5 and academicons fonts
@@ -96,9 +152,9 @@ def resume(resume_info):
   \definecolor{PrimaryColor}{HTML}{001F5A}
   \definecolor{SecondaryColor}{HTML}{0039AC}
   \definecolor{ThirdColor}{HTML}{F3890B}
-  \definecolor{BodyColor}{HTML}{666666}
+  \definecolor{BodyColor}{HTML}{'''+str(primary_font_color)+r'''}
   \definecolor{EmphasisColor}{HTML}{2E2E2E}
-  \definecolor{BackgroundColor}{HTML}{E2E2E2}
+  \definecolor{BackgroundColor}{HTML}{'''+str(background_color)+r'''}
 \fi%
 
 \colorlet{name}{PrimaryColor}
@@ -179,71 +235,10 @@ def resume(resume_info):
         \vspace{1.0em}
 
         % ----- STRENGTHS -----
-        \cvsection{Strengths}
-        
-        \skillsection{Software Development}
-        \vspace{0.5em}
         '''
-    for exp_i_count, exp_i in enumerate(resume_info['strengths']['software_development'].values()):
-        resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
-    resume_str += r'''
-        \vspace{1.0em}
-        \skillsection{Programming Languages}
-        \vspace{0.5em}
-        '''
-    for exp_i_count, exp_i in enumerate(resume_info['strengths']['programming'].values()):
-        resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
-    resume_str += r'''
-        \vspace{1.0em}
-        \skillsection{Other}
-        \vspace{0.5em}
-        '''
-    for exp_i_count, exp_i in enumerate(resume_info['strengths']['other'].values()):
-        resume_str += r'\skill{'+str(exp_i['skill'])+r'}{'+str(exp_i['rating'])+r'}'
+    resume_str += build_strengths(resume_info, show_skill_ratings)
     resume_str += r'''
 
-
-        %\skill{Python}{5}
-        %\skill{Bash}{4}
-        %\skill{C++}{2}
-        %\skill{Apple Script}{3}
-        %\skill{HTML/CSS}{3}
-        %\skill{LaTeX}{4}
-        
-        %\vspace{0.5em}
-        %\skillsection{Operating Systems}
-        %\skill{Linux}{4}
-        %\skill{MacOS}{5}
-        %\skill{Windows}{3}
-        
-        % ----- STRENGTHS -----
-        
-        % ----- LEARNING -----
-        %\cvsection{Learning}
-        %    \cvtag{Uno}
-        %    \cvtag{Dos}
-        %    \cvtag{Tres}
-        %    \cvtag{Cuatro}
-        %    \cvtag{Cinco}
-        %    \cvtag{Seis}
-        %    \cvtag{Siete}
-        %    \cvtag{Ocho}
-        %    \cvtag{Nueve}
-        %    \cvtag{Diez}
-        %    \medskip
-        %    
-        %    \cvtag{Rojo}
-        %    \cvtag{Amarillo}
-        %    \cvtag{Azul}
-        %    \cvtag{Verde}
-        %    \cvtag{Violeta}
-        %    \cvtag{Naranja}
-        %    \cvtag{Marron}
-        %    \cvtag{Blanco}
-        %    \cvtag{Gris}
-        %    \cvtag{Negro}
-        % ----- LEARNING -----
-        
         % ----- LANGUAGES -----
         %\cvsection{Languages}
         %    \cvlang{Lang 1}{Native}\\

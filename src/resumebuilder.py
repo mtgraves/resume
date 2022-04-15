@@ -14,8 +14,16 @@ class Resume:
         - maxgcv
     '''
 
-    def __init__(self, fpath_base, resume_info_path, resume_template):
-        '''Constructor Method
+    def __init__(
+        self,
+        fpath_base,
+        resume_info_path,
+        resume_template,
+        show_skill_ratings=False,
+        primary_font_color='666666',
+        background_color='ffffff',
+    ):
+        '''Resume Class constructor
         '''
 
         # check input and raise useful errors if any "bad" input was passed
@@ -29,6 +37,11 @@ class Resume:
         # load user resume info/configuration
         with open(resume_info_path, 'r') as config_f:
             self.resume_info_md = yaml.safe_load(config_f)
+
+        # resume styling
+        self.primary_font_color = primary_font_color
+        self.show_skill_ratings = show_skill_ratings
+        self.background_color = background_color
 
         # we hold the resume information in markdown and tex format so that each can be written out
         self.resume_info_tex = self.resume_info_md.copy()
@@ -47,7 +60,12 @@ class Resume:
         )
         
         if self.resume_template == 'altacv':
-            resume_str = t_1.resume(self.resume_info_tex)
+            resume_str = t_1.resume(
+                self.resume_info_tex,
+                show_skill_ratings=self.show_skill_ratings,
+                primary_font_color=self.primary_font_color,
+                background_color=self.background_color,
+            )
         elif self.resume_template == 'maxgcv':
             resume_str = t_2.resume(self.resume_info_tex)
 
@@ -78,25 +96,3 @@ class Resume:
         '''write user resume out to pdf format
         '''
         os.system('pdflatex '+str(self.fpath_tex)+' -output-directory out')
-
-
-'''
-def main():
-
-    fpath_base = 'MaxGraves_resume_test'
-    resume_info_path = './resume_contents.yml'
-    #resume_template = 'maxgcv'
-    resume_template = 'altacv'
-
-    my_resume = Resume(
-        fpath_base = fpath_base,
-        resume_info_path = resume_info_path,
-        resume_template = resume_template,
-    )
-
-    my_resume.write_tex()
-    my_resume.write_pdf()
-
-if __name__=='__main__':
-    main()
-'''
