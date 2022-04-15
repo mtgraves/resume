@@ -2,6 +2,8 @@
 
 This allows you to build a resume using `LaTeX`, from a `yaml` file.
 
+*... at this point, this is a minimum viable product and only supports one template with minimal options*
+
 ## Why?
 
 This can allow us to try out multiple different styles/layouts for a resume while inserting content that might be job-specific into each template.
@@ -12,7 +14,8 @@ I always end up with dozens of resumes cluttering up my filesystems whenever it'
 
 an example use case is as follows.
 
-1. create a file called `test.py` inside of the root project directory with the following contents:
+1. install `LaTeX` on your system and ensure that `pdflatex` is on your path.
+2. create a file called `test.py` inside of the root project directory with the following contents:
 
 ```python
 from src.resumebuilder import Resume
@@ -36,7 +39,7 @@ if __name__=='__main__':
     main()
 ```
 
-2. create a yaml config file inside of the root project directory called 'resume_contents.yml' with the following contents:
+3. create a yaml config file inside of the root project directory called 'resume_contents.yml' with the following contents:
 
 ```yaml
 applicant_info:
@@ -104,6 +107,7 @@ experience:
       h_1: 'did a couple of things'
 ```
 
+4. you should now have a `.pdf` and a `.tex` file in the `out` directory.
 
 ## Release Notes / Change Log
 [Click here to see the release notes](./docs/CHANGELOG.md)
