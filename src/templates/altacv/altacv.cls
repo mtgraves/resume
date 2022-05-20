@@ -291,6 +291,15 @@
   \medskip\normalsize
 }
 
+\newcommand{\cveventtwo}[4]{%
+  {\normalsize\color{emphasis}#1}
+  \ifstrequal{#2}{}{}{\small{\color{accent}#2}}
+  \ifstrequal{#3}{}{}{{\small\makebox[0.5\linewidth][l]{\color{accent}\faCalendar\color{emphasis}~#3}}}
+  \par\medskip\normalsize
+  \ifstrequal{#4}{}{}{{\small\makebox[0.5\linewidth][l]{\color{accent}\faMapMarker\color{emphasis}~#4}}}\par
+  \medskip\normalsize
+}
+
 \newcommand{\cvachievement}[3]{%
   \begin{tabularx}{\linewidth}{@{}p{2em} @{\hspace{1ex}} >{\raggedright\arraybackslash}X@{}}
   \multirow{2}{*}{\Large\color{accent}#1} & \bfseries\textcolor{emphasis}{#2}\\

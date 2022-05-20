@@ -14,7 +14,7 @@ I always end up with dozens of resumes cluttering up my filesystems whenever it'
 
 an example use case is as follows.
 
-1. install `LaTeX` on your system and ensure that `pdflatex` is on your path.
+1. install `LaTeX` on your system and ensure that `pdflatex` is on your path.  If you are using `MikTeX` then this should work out of the box.  If you are using something slimmer like `basictex` for macos, then additional packages will be required.
 2. create a file called `test.py` inside of the root project directory with the following contents:
 
 ```python

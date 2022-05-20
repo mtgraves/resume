@@ -3,8 +3,9 @@
 *.log
 *.out
 
-# pycache dirs
+# pycache dirs (windows) and files
 **__pycache__
+**.pyc
 
 # tex templates used for creating raw strings
 tex_templates/*
@@ -23,3 +24,6 @@ docs/testreports/*
 
 # local file used for building my own resume
 test.py
+
+# ds store file for mac
+**.DS_Store

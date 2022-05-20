@@ -88,6 +88,9 @@ class Resume:
     def write_tex(self):
         '''write user resume out to LaTeX (.tex) format
         '''
+        if not os.path.exists(os.path.dirname(self.fpath_tex)):
+            os.mkdir(os.path.dirname(self.fpath_tex))
+
         with open(self.fpath_tex, 'wt') as f:
             f.write(self.resume_str)
 

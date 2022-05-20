@@ -29,6 +29,34 @@ def cls_file_path():
     
     return alta_cls_file
 
+def build_strength_group(strength_vals:dict, line_char_max:int):
+    '''builds a strength group, ensuring
+    that the tags are wrapped based on some (rudimentary)
+    length limit to avoid horizontal overflow.
+    '''
+    resume_str = r''
+    line_char_count = 0
+    # iterate the kvps inside of this particular
+    for exp_i_count, exp_i in enumerate(strength_vals.values()):
+        line_char_count += len(exp_i['skill'])
+        # if we are under the limit with our new tag, we add it
+        # to the list and continue.
+        if line_char_count < line_char_max:
+            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}'
+        # otherwise, we add a new line then add the tag,
+        # then reset the line character count to that of the current
+        # tags length.
+        else:
+            # we do not add a line break for the first element
+            if exp_i_count != 0:
+                resume_str += r'\\'
+            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}'
+            line_char_count = len(exp_i['skill'])
+
+    # ensure we have a line break between strength types
+    resume_str += r'\\'
+
+    return resume_str
 
 def build_strengths(resume_info, show_skill_ratings):
     '''returns tex for the skills section
@@ -61,12 +89,9 @@ def build_strengths(resume_info, show_skill_ratings):
         resume_str += r'''
         \cvsection{Strengths}
             '''
-        for exp_i_count, exp_i in enumerate(resume_info['strengths']['programming'].values()):
-            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
-        for exp_i_count, exp_i in enumerate(resume_info['strengths']['software_development'].values()):
-            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
-        for exp_i_count, exp_i in enumerate(resume_info['strengths']['other'].values()):
-            resume_str += r'\cvtag{'+str(exp_i['skill'])+r'}\\'
+        line_char_max = 20
+        for strength_key in resume_info['strengths'].keys():
+            resume_str += build_strength_group(resume_info['strengths'][strength_key], line_char_max)
     
     return resume_str
 
@@ -227,7 +252,7 @@ def resume(
 
         % ----- ABOUT ME -----
         \cvsection{Objective}
-            \begin{quote}
+            \begin{quote}\small
             '''+str(resume_info['applicant_info']['objective'])+r'''
             \end{quote}
         % ----- ABOUT ME -----
@@ -239,53 +264,6 @@ def resume(
     resume_str += build_strengths(resume_info, show_skill_ratings)
     resume_str += r'''
 
-        % ----- LANGUAGES -----
-        %\cvsection{Languages}
-        %    \cvlang{Lang 1}{Native}\\
-        %    \divider
-        %    
-        %    \cvlang{Lang 2}{Basic / A2}
-        %    %% Yeah I didn't spend too much time making all the
-        %    %% spacing consistent... sorry. Use \smallskip, \medskip,
-        %    %% \bigskip, \vpsace etc to make ajustments.
-        %    \smallskip
-        % ----- LANGUAGES -----
-            
-        % ----- REFERENCES -----
-        %\cvsection{References}
-        %    \cvref{Ref 1}{ref-1}
-        %    \divider
-        %    
-        %    \cvref{Ref 2}{ref-2}
-        %    \divider
-        %    
-        %    \cvref{Ref 3}{ref-3}
-        %    \smallskip
-        % ----- REFERENCES -----
-        
-        % ----- MOST PROUD -----
-        % \cvsection{Most Proud of}
-        
-        % \cvachievement{\faTrophy}{Fantastic Achievement}{and some details about it}\\
-        % \divider
-        % \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}\\
-        % \divider
-        % \cvachievement{\faHeartbeat}{Another achievement}{more details about it of course}
-        % ----- MOST PROUD -----
-        
-        % \cvsection{A Day of My Life}
-        
-        % Adapted from @Jake's answer from http://tex.stackexchange.com/a/82729/226
-        % \wheelchart{outer radius}{inner radius}{
-        % comma-separated list of value/text width/color/detail}
-        % \wheelchart{1.5cm}{0.5cm}{%
-        %   6/8em/accent!30/{Sleep,\\beautiful sleep},
-        %   3/8em/accent!40/Hopeful novelist by night,
-        %   8/8em/accent!60/Daytime job,
-        %   2/10em/accent/Sports and relaxation,
-        %   5/6em/accent!20/Spending time with family
-        % }
-        
         % use ONLY \newpage if you want to force a page break for
         % ONLY the current column
         \newpage
@@ -293,8 +271,6 @@ def resume(
         %% Switch to the right column. This will now automatically move to the second
         %% page if the content is too long.
         \switchcolumn
-        
-        
         
         % ----- EXPERIENCE -----
         \cvsection{Experience}
@@ -310,11 +286,12 @@ def resume(
             resume_str += r'\end{itemize}'
         
         if exp_i_count < len(resume_info['experience'].values())-1:
-            resume_str += r'\divider'
+            resume_str += r'\divider\\'
     resume_str += r'''    
         % ----- EXPERIENCE -----
         % ----- EDUCATION -----
-        \cvsection{Education}'''
+        \cvsection{Education}
+'''
     for exp_i_count, exp_i in enumerate(resume_info['education'].values()):
         resume_str += r'\cvevent{'+exp_i['degree']+r'}{| '+exp_i['school']+r'}{'+exp_i['year_graduated']+r'}{}'
         resume_str += r'''
@@ -325,11 +302,35 @@ def resume(
                 resume_str += r'\item '+highlight_i+r'\\'
             resume_str += r'\end{itemize}'
         
-        if exp_i_count < len(resume_info['experience'].values())-1:
-            resume_str += r'\divider'
+        if exp_i_count < len(resume_info['education'].values())-1:
+            resume_str += r'\divider\\'
+    resume_str += r'''
+        % ----- EDUCATION -----
+        \end{paracol}
+        \newpage
+        % ----- PUBLICATIONS -----
+        \cvsection{Publications}
+'''
+    for exp_i_count, exp_i in enumerate(resume_info['publications'].values()):
+        resume_str += r'\cveventtwo{'+exp_i['journal']+r'}{| '+exp_i['title']+r' |}{ '+str(exp_i['year'])+r'}{}'
+        resume_str += r'''
+        '''
+        resume_str += r'\begin{itemize}[label = {}]'
+        resume_str += r'\item '+str(exp_i['authors'])+r' | DOI: '+str(exp_i['doi'])+r' | '+str(exp_i['status'])+r'\\'
+        resume_str += r'\end{itemize}'
 
-    resume_str += r'''% ----- EDUCATION -----
-        
+        if exp_i_count < len(resume_info['publications'].values())-1:
+            resume_str += r'\divider\\'
+    resume_str += r'''
+        % ----- PUBLICATIONS -----
+        % ----- HONORS/AWARDS -----
+        \cvsection{Honors/Awards}
+'''
+    for exp_i_count, exp_i in enumerate(resume_info['honors'].values()):
+        resume_str += r'\cveventtwo{'+exp_i['org']+r'}{| '+exp_i['title']+r' |}{ '+str(exp_i['year'])+r'}{}'
+    resume_str += r'''
+        % ----- HONORS/AWARDS -----
+
         % ----- PROJECTS -----
         %\cvsection{Projects}
         %    \cvevent{Project 1 }{\cvrepo{| \faGithub}{https://github.com/user/repo}\cvrepo{| \faGlobe}{https://repo-demo.com/}}{Mm YYYY -- Mm YYYY}{}
@@ -345,7 +346,7 @@ def resume(
         %        \item Item 2
         %    \end{itemize}
         % ----- PROJECTS -----
-    \end{paracol}
+    %\end{paracol}
 \end{document}
 '''
     return resume_str
