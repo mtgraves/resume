@@ -6,9 +6,9 @@ This allows you to build a resume using `LaTeX`, from a `yaml` file.
 
 ## Why?
 
-This can allow us to try out multiple different styles/layouts for a resume while inserting content that might be job-specific into each template.
+This can allow for trying out multiple different styles/layouts for a resume while inserting content that might be job-specific into each template.
 
-I always end up with dozens of resumes cluttering up my filesystems whenever it's time to apply for jobs.  Then I end up inevitably trying out multiple different styles each time.  So for `N` drafts of a resume (content) then `M` different styles you end up with `N x M` permutations of files and it's super inefficient and janky.
+I always end up with  (at least) dozens of resumes cluttering up my filesystems whenever it's time to apply for jobs.  Then I end up inevitably trying out multiple different styles each time.  So for `N` drafts of a resume (content) then `M` different styles you end up with `N x M` permutations of files and it's super inefficient and janky.
 
 ## How to use
 
